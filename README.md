@@ -23,7 +23,7 @@ Generate detailed financial reports from PDF documents using free and open-sourc
 ## 📦 Setup
 
 ```bash
-git clone https://github.com/your-username/finance-report-LLM-RAG.git
+git clone https://github.com/GN-SR/finance-report-LLM-RAG.git
 cd finance-report-LLM-RAG
 pip install -r requirements.txt
 ```

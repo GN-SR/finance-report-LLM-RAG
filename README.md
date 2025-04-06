@@ -1,1 +1,1 @@
-# finance-report-LLM-RAG
+# Finance Report Generator with LLM & RAG

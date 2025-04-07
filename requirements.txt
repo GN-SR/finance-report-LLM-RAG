@@ -1,8 +1,7 @@
-
-streamlit
+flask
+flask_cors
+transformers
+torch
 langchain
-langchain-community
 faiss-cpu
 sentence-transformers
-huggingface_hub
-pypdf

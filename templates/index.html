@@ -1,26 +1,67 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Finance Report Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f2f2f2;
+        }
+        h1 {
+            color: #333;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            font-size: 16px;
+            resize: vertical;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        .output {
+            margin-top: 30px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            white-space: pre-wrap;
+        }
+    </style>
 </head>
 <body>
-    <h1>Finance Report Generator</h1>
-    <input type="text" id="query" placeholder="Enter your query..." />
-    <button onclick="generate()">Generate</button>
-    <pre id="result"></pre>
+    <h1>Finance Report Generator with LLM & RAG</h1>
+    <p>Enter your financial query below:</p>
+    <textarea id="queryInput" placeholder="e.g., Generate a report on Tesla Q4 2023 earnings..."></textarea>
+    <br>
+    <button onclick="generateReport()">Generate Report</button>
+
+    <div class="output" id="reportOutput"></div>
 
     <script>
-        async function generate() {
-            const query = document.getElementById("query").value;
-            const res = await fetch("/generate", {
+        async function generateReport() {
+            const query = document.getElementById("queryInput").value;
+            const outputDiv = document.getElementById("reportOutput");
+            outputDiv.innerHTML = "Generating report...";
+
+            const response = await fetch("/generate", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ query })
             });
-            const data = await res.json();
-            document.getElementById("result").textContent = data.report;
+
+            const data = await response.json();
+
+            if (data.report) {
+                outputDiv.innerText = data.report;
+            } else {
+                outputDiv.innerText = "Error: " + (data.error || "Something went wrong");
+            }
         }
     </script>
 </body>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Finance Report Generator</title>
+</head>
+<body>
+    <h1>Finance Report Generator</h1>
+    <input type="text" id="query" placeholder="Enter your query..." />
+    <button onclick="generate()">Generate</button>
+    <pre id="result"></pre>
+
+    <script>
+        async function generate() {
+            const query = document.getElementById("query").value;
+            const res = await fetch("/generate", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ query })
+            });
+            const data = await res.json();
+            document.getElementById("result").textContent = data.report;
+        }
+    </script>
+</body>
+</html>

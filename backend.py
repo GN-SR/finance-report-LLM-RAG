@@ -21,7 +21,11 @@ DB_FAISS_PATH = "vectorstore/db_faiss"
 print("Loading FAISS DB...")
 
 if os.path.exists(DB_FAISS_PATH):
-    vectorstore = FAISS.load_local(DB_FAISS_PATH, HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2"))
+    vectorstore = FAISS.load_local(
+    DB_FAISS_PATH,
+    HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2"),
+    allow_dangerous_deserialization=True
+)
 else:
     documents = [Document(page_content="Dummy data about financial trends and reporting.")]
     text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)

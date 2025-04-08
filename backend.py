@@ -1,9 +1,10 @@
 from langchain_community.llms import HuggingFacePipeline
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFacePipeline, HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from transformers import pipeline
 from langchain.chains import RetrievalQA
 from langchain.docstore.document import Document
+
 
 DB_FAISS_PATH = "vectorstore/db_faiss"
 

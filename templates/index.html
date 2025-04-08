@@ -1,43 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finance Report Generator</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Finance Report Generator</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 600px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 18px;
+      color: #34495e;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"],
+    input[type="file"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background-color: #3498db;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    .output {
+      margin-top: 25px;
+      padding: 20px;
+      background-color: #ecf0f1;
+      border-radius: 10px;
+      font-size: 15px;
+      white-space: pre-wrap;
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
     <h1>Finance Report Generator</h1>
-
     <form id="reportForm" enctype="multipart/form-data">
-        <h2>Ask a financial question or upload a document</h2>
-        <input type="text" name="query" id="queryInput" placeholder="Enter your query">
-        <br><br>
-        <input type="file" name="document" id="fileInput" accept=".pdf,.txt,.docx">
-        <br><br>
-        <button type="submit">Generate Report</button>
+      <h2>Ask a financial question or upload a document</h2>
+      <input type="text" name="query" id="queryInput" placeholder="Enter your query">
+      <input type="file" name="document" id="fileInput" accept=".pdf,.txt,.docx">
+      <button type="submit">Generate Report</button>
     </form>
 
     <div class="output" id="output"></div>
+  </div>
 
-    <script>
-        document.getElementById("reportForm").addEventListener("submit", async function (e) {
-            e.preventDefault();
+  <script>
+    document.getElementById("reportForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
 
-            const form = document.getElementById("reportForm");
-            const formData = new FormData(form);
-            const outputDiv = document.getElementById("output");
+      const form = document.getElementById("reportForm");
+      const formData = new FormData(form);
+      const outputDiv = document.getElementById("output");
 
-            outputDiv.innerText = "Generating report...";
+      outputDiv.innerText = "Generating report...";
 
-            const response = await fetch("/generate_or_upload", {
-                method: "POST",
-                body: formData
-            });
+      const response = await fetch("/generate_or_upload", {
+        method: "POST",
+        body: formData
+      });
 
-            const data = await response.json();
-
-            outputDiv.innerText = data.report || "Error: " + (data.error || "Something went wrong");
-        });
-    </script>
+      const data = await response.json();
+      outputDiv.innerText = data.report || "Error: " + (data.error || "Something went wrong");
+    });
+  </script>
 </body>
 </html>
